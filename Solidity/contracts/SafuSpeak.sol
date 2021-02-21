@@ -8,7 +8,7 @@ pragma solidity >=0.4.23;
 //Created By Hephyrius (Github.com/Hephyrius)
 //Repository can be found at (Github.com/Hephyrius/BinanceSmartChain)
 
-contract NoFilter {
+contract SafuSpeak {
     
     //post related variables
     uint postNumber; // keeps track of posts so that every one is unique
