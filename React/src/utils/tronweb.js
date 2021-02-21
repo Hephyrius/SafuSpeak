@@ -46,7 +46,7 @@ async function load_contract() {
     updateStatus('Contract Ready!');
 }
 
-load_contract();
+
 
 async function printCoolNumber() {
     updateStatus('fetching Cool Number...');
@@ -54,10 +54,12 @@ async function printCoolNumber() {
     updateStatus(`coolNumber: ${coolNumber}`);
 }
 
+
 async function getCurrentAccount() {
-    const accounts = window.web3.eth.getAccounts();
+    const accounts = await window.web3.eth.getAccounts();
     return accounts[0];
 }
+
 
 export async function createNewPost(title, content, tags) {
 
@@ -67,6 +69,8 @@ export async function createNewPost(title, content, tags) {
         });
 
 
+    load_contract();
+
     //convert the data to an appropriate format for the blockchain to handle
     let byteTitle = a2hex(title);
     let byteContent = a2hex(content);
@@ -74,9 +78,12 @@ export async function createNewPost(title, content, tags) {
 
     //submit the data to the blockchain
     const account = await getCurrentAccount();
+
+    console.log(account);
+
     await window.contract.methods.CreatePost(byteTitle, byteContent, byteTags).send({from: account
 
-    })/*.then(res => Swal({
+    }).then(res => Swal({
         title:'Post Created Successfully',
         type: 'success'
 
@@ -85,29 +92,181 @@ export async function createNewPost(title, content, tags) {
              title:'Post Creation Failed',
              type: 'error'
         }
-    ));*/
+    ));
 
 }
+
 
 //get data from contract events and convert it into a readable/useable state
 export async function getPosts() {
+    await load_contract();
 
+    var a;
+    window.contract.getPastEvents('PostContent', {
+        filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        fromBlock: 0,
+        toBlock: 'latest'
+    }, function(error, events){ console.log(events); })
+    .then(function(events){
+        convertPosts(events) // same results as the optional callback above
+    });
+}
+
+export async function convertPosts(es){
+    var posts = []
+    var TagList = []
+
+    console.log(es)
+
+    var events = es
+
+    for(var i=0; i<events.length; i++){
+
+        console.log(i)
+        let address = events[i]['returnValues']['author'];
+        let tronaddress = address;
+        //tronaddress = "41" + tronaddress;
+        //tronaddress = tronWeb.address.fromHex(tronaddress)
+
+        //format data so it can be used and stored better
+
+        
+        var post = {
+            title: hex2a(events[i]['returnValues']['title']),
+            timestamp: Time2a(events[i]['returnValues']['postTimestamp']),
+            tags: hex2a(events[i]['returnValues']['tags']),
+            postid: events[i]['returnValues']['id'],
+            author: address,
+            tronaddress: tronaddress,
+            content: hex2a(events[i]['returnValues']['text']),
+            hms: Time2HMS(events[i]['returnValues']['postTimestamp']),
+            type: TextType(hex2a(events[i]['returnValues']['text']))
+          }
+          TagList = TagList.concat(post['tags']);
+
+        posts = posts.concat(post);
+    }
+
+    localStorage.setItem("Posts", JSON.stringify(posts));
+    localStorage.setItem("TagList", JSON.stringify(TagList));
+
+    return posts;
 }
 
 export async function createNewComment(commentText, postid,  parentComment) {
+
+    //notify the user that the comment has been submitted
+    Swal({title:'Comment Transaction Submitted',
+            type: 'info'
+        });
+
+
+    
+    load_contract();
+
+    //submit the data to the blockchain
+    const account = await getCurrentAccount();
+
+    //convert the data to an appropriate format for the blockchain to handle
+    //let byteTitle = a2hex(title);
+    let bytecommentText = a2hex(commentText);
+    let id = "0x" + Number(postid).toString(16);
+
+    //submit the data to the blockchain
+    await window.contract.methods.PostComment(bytecommentText, id, "0x00").send({from: account}).then(res => Swal({
+        title:'Comment Posted Successfully',
+        type: 'success'
+
+    })).catch(err => Swal(
+        {
+             title:'Comment Post Failed',
+             type: 'error'
+        }
+    ));
 
 }
 
 //get data from contract events and convert it into a readable/useable state
 export async function getComments() {
+    await load_contract();
 
+    window.contract.getPastEvents('CommentCreated', {
+        filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'}, // Using an array means OR: e.g. 20 or 23
+        fromBlock: 0,
+        toBlock: 'latest'
+    }, function(error, events){ console.log(events); })
+    .then(function(events){
+        convertComments(events) // same results as the optional callback above
+    });
+}
+
+//get data from contract events and convert it into a readable/useable state
+export async function convertComments(es) {
+
+    var events = es;
+    var comments = []
+    for(var i=0; i<events.length; i++){
+
+        let address = events[i]['result']['commenter'];
+        let tronaddress = address
+
+        var comment = {
+            parentComment: hex2a(events[i]['result']['parentComment']),
+            postid: events[i]['result']['postId'],
+            author: address,
+            tronaddress: tronaddress,
+            content: hex2a(events[i]['result']['comment']),
+            timestamp: Time2a(events[i]['result']['commentTimestamp']),
+            commentid: events[i]['result']['commentId'],
+            hms: Time2HMS(events[i]['result']['commentTimestamp'])
+          }
+
+          comments = comments.concat(comment);
+    }
+
+    localStorage.setItem("Comments", JSON.stringify(comments));
+
+    return comments;
 }
 
 //get the vote counters from the blockchain
 export async function getVoteCounters() {
 
-}
+    load_contract();
 
+    //submit the data to the blockchain
+    const account = await getCurrentAccount();
+
+    let posts = JSON.parse(localStorage.getItem("Posts"));
+    let votes = [];
+
+    if (!posts){
+        posts = [];
+    }
+
+    for(var i=0; i<posts.length; i++){
+        let pid = posts[i]['postid'];
+        let id = "0x" + Number(pid).toString(16);
+
+        //grab vote data from the blockchain
+        let upvotecall = await window.contract.methods.getUpVotes(id).call();
+        let up = window.web3.toBN(upvotecall['_hex']).toNumber();
+
+        let downvotecall = await window.contract.methods.getDownVotes(id).call();
+        let down = window.web3.toBN(downvotecall['_hex']).toNumber();
+
+        let postVote = {
+            postid : pid,
+            upvotes : up,
+            downvotes: down,
+            total: (up-down)
+        }
+        votes = votes.concat(postVote);
+    } 
+
+    localStorage.setItem("PostVotes", JSON.stringify(votes));
+
+}
 export async function VoteOnPost(postid, votetype) {
 
 }
@@ -154,76 +313,6 @@ export async function getUsers() {
 
 /*
 
-export async function createNewPost(title, content, tags) {
-
-    //notify the user that the post has been submitted
-    Swal({title:'Post Transaction Submitted',
-            type: 'info'
-        });
-
-    //load the contract 
-    const contract = await window.web3.contract().at(contractAddress);
-
-    //convert the data to an appropriate format for the blockchain to handle
-    let byteTitle = a2hex(title);
-    let byteContent = a2hex(content);
-    let byteTags = a2hex(tags);
-
-    //submit the data to the blockchain
-    contract.CreatePost(byteTitle, byteContent, byteTags).send({
-        shouldPollResponse:true,
-        callValue:0
-
-    }).then(res => Swal({
-        title:'Post Created Successfully',
-        type: 'success'
-
-    })).catch(err => Swal(
-        {
-             title:'Post Creation Failed',
-             type: 'error'
-        }
-    ));
-
-}
-
-//get data from contract events and convert it into a readable/useable state
-export async function getPosts() {
-    tronWeb = dynamicTronlink()
-    //load the contract 
-    const events = await window.web3.eth.filter(contractAddress, 0, "PostContent", 0,  200, 1);
-
-    var posts = []
-    var TagList = []
-    for(var i=0; i<events.length; i++){
-
-        let address = events[i]['result']['author'];
-        let tronaddress = address.substring(2, address.length);
-        tronaddress = "41" + tronaddress;
-        tronaddress = tronWeb.address.fromHex(tronaddress)
-
-        //format data so it can be used and stored better
-        var post = {
-            title: hex2a(events[i]['result']['title']),
-            timestamp: Time2a(events[i]['result']['postTimestamp']),
-            tags: hex2a(events[i]['result']['tags']),
-            postid: events[i]['result']['id'],
-            author: address,
-            tronaddress: tronaddress,
-            content: hex2a(events[i]['result']['text']),
-            hms: Time2HMS(events[i]['result']['postTimestamp']),
-            type: TextType(hex2a(events[i]['result']['text']))
-          }
-          TagList = TagList.concat(post['tags']);
-
-        posts = posts.concat(post);
-    }
-
-    localStorage.setItem("Posts", JSON.stringify(posts));
-    localStorage.setItem("TagList", JSON.stringify(TagList));
-
-    return posts;
-}
 
 export async function createNewComment(commentText, postid,  parentComment) {
 

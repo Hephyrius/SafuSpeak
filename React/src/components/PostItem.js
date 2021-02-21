@@ -31,10 +31,15 @@ class PostItem extends Component {
     let Users = JSON.parse(localStorage.getItem("KnownUsers"));
     let username = "anonymous"
 
-    for(var i=0; i<Users.length; i++){
-      if(Users[i]['HexAddress'] == this.props.post.author){
-        username = Users[i]['UserName'];
+    try{
+      for(var i=0; i<Users.length; i++){
+        if(Users[i]['HexAddress'] == this.props.post.author){
+          username = Users[i]['UserName'];
+        }
       }
+    }
+    catch{
+      localStorage.setItem("KnownUsers", JSON.stringify({}));
     }
 
     return (
