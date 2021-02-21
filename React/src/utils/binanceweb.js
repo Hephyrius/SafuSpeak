@@ -1,10 +1,10 @@
-//No Filter is a dApp created for the Tron Accelerator
+//Safu Speak is a dApp created for the Binance Hackathon
 //The smart contract enables content creation
 //as well as metric tracking and other logic
 //When coupled with the frontend, it creates an experience similar to a 
 //traditional blog style social website such as medium and reddit
 //Created By Harnick Khera (Github.com/Hephyrius)
-//Repository can be found at (Github.com/Hephyrius/Nofilter)
+//Repository can be found at (Github.com/Hephyrius/SafuSpeak)
 
 
 import Swal from 'sweetalert2'
@@ -136,8 +136,8 @@ export async function convertPosts(es){
             timestamp: Time2a(events[i]['returnValues']['postTimestamp']),
             tags: hex2a(events[i]['returnValues']['tags']),
             postid: events[i]['returnValues']['id'],
-            author: address,
-            tronaddress: tronaddress,
+            author: "0x" + address,
+            tronaddress: "0x" + tronaddress,
             content: hex2a(events[i]['returnValues']['text']),
             hms: Time2HMS(events[i]['returnValues']['postTimestamp']),
             type: TextType(hex2a(events[i]['returnValues']['text']))
@@ -208,13 +208,14 @@ export async function convertComments(es) {
     for(var i=0; i<events.length; i++){
 
         let address = events[i]['result']['commenter'];
+        console.log(address)
         let tronaddress = address
 
         var comment = {
             parentComment: hex2a(events[i]['result']['parentComment']),
             postid: events[i]['result']['postId'],
-            author: address,
-            tronaddress: tronaddress,
+            author: "0x" + address,
+            tronaddress: "0x" + tronaddress,
             content: hex2a(events[i]['result']['comment']),
             timestamp: Time2a(events[i]['result']['commentTimestamp']),
             commentid: events[i]['result']['commentId'],
@@ -317,8 +318,6 @@ export async function VoteOnPost(postid, votetype) {
 //// Comment Related Functions
 
 //get the vote counters from the blockchain
-
-//get the vote counters from the blockchain
 export async function getCommentVoteCounters() {
     load_contract();
     const account = await getCurrentAccount();
@@ -407,59 +406,26 @@ export async function VoteOnComment(postid, commentid, votetype) {
 
 //DONATION SYSTEM
 
-export async function DonateTrx(postid, trxAmount) {
-
-}
-
-//get the vote counters from the blockchain
-export async function getDonations() {
-
-}
-
-//USERNAME SYSTEM
-
-export async function ChangeUsername(UsernameString) {
-
-}
-
-//get the current users data
-export async function getUserData() {
-
-}
-
-
-export async function getUsers() {
-
-}
-
-/*
-
-
-
-//DONATION SYSTEM
-
-export async function DonateTrx(postid, trxAmount) {
+export async function DonateBNB(postid, BNBAmount) {
 
     //load the contract 
-    const contract = await window.web3.contract().at(contractAddress);
+    load_contract();
+    const account = await getCurrentAccount();
 
     //convert the postid into a useable form
-    let sunAmount = Number(trxAmount * 1000000) // 1 trx is 1 million sun, call value is in sun.
+    let sunAmount = Number(BNBAmount * 1000000) // 1 BNB is 1 million sun, call value is in sun.
     let sunHexValue = "0x" + Number(sunAmount).toString(16);
     let id = "0x" + Number(postid).toString(16);
 
 
-    Swal({title:'Transaction to Donate ' + trxAmount.toString() + "trx sent",
+    Swal({title:'Transaction to Donate ' + BNBAmount.toString() + "BNB sent",
     type: 'info'
     });
 
 
     //submit the data to the blockchain
-    contract.makeDonation(id).send({
-        shouldPollResponse:true,
-        callValue: sunAmount
-
-    }).then(res => Swal({
+    await window.contract.methods.makeDonation(id).send({from: account, callValue: sunAmount})
+    .then(res => Swal({
         title:'Donation Successful',
         type: 'success'
 
@@ -471,10 +437,11 @@ export async function DonateTrx(postid, trxAmount) {
     ));
 }
 
-//get the vote counters from the blockchain
+
+//get the donation counters from the blockchain
 export async function getDonations() {
-    tronWeb = dynamicTronlink()
-    const contract = await tronWeb.contract().at(contractAddress);
+    load_contract();
+    const account = await getCurrentAccount();
 
     let posts = JSON.parse(localStorage.getItem("Posts"));
     let Donations = [];
@@ -488,13 +455,13 @@ export async function getDonations() {
         let id = "0x" + Number(pid).toString(16);
 
         //grab vote data from the blockchain
-        let ContractPostDonation = await contract.getPostDonations(id).call();
-        let Sun = tronWeb.toBigNumber(ContractPostDonation['_hex']).toNumber();
+        let ContractPostDonation = await window.contract.methods.getPostDonations(id).call();
+        let Sun = window.web3.utils.toBN(ContractPostDonation).toNumber();
 
         let Donation = {
             postid : pid,
             SunDonations : Sun,
-            TrxDonation: (Sun/1000000)
+            BNBDonation: (Sun/1000000)
         }
 
         Donations = Donations.concat(Donation);
@@ -509,9 +476,10 @@ export async function getDonations() {
 export async function ChangeUsername(UsernameString) {
 
     //load the contract 
-    const contract = await window.web3.contract().at(contractAddress);
+    load_contract();
+    const account = await getCurrentAccount();
 
-    //convert tron amount into a sun value as sun is used as the call value
+    //convert Binance amount into a sun value as sun is used as the call value
     let user = aTo32bytehex(UsernameString)
 
     //notify the user that the deposit has been attempted
@@ -520,11 +488,8 @@ export async function ChangeUsername(UsernameString) {
     });
 
     //submit the data to the blockchain
-    contract.SetUsername(user).send({
-        shouldPollResponse:true,
-        callValue: 0
-
-    }).then(res => Swal({
+    await window.contract.methods.SetUsername(user).send({from: account})
+    .then(res => Swal({
         title:'Username Changed Successfully',
         type: 'success'
 
@@ -538,8 +503,8 @@ export async function ChangeUsername(UsernameString) {
 
 //get the current users data
 export async function getUserData() {
-    tronWeb = dynamicTronlink()
-    const contract = await tronWeb.contract().at(contractAddress);
+    load_contract();
+    const account = await getCurrentAccount();
 
     let user = JSON.parse(localStorage.getItem("User"));
 
@@ -548,18 +513,16 @@ export async function getUserData() {
     }
 
     //grab the sender address from the blockchain
-    let senderAddress = await contract.getSenderAddress().call();
-    let hexAdd = senderAddress;
-    let add = tronWeb.address.fromHex(hexAdd);
-    
-    let ContractUsername = await contract.getUsername(hexAdd).call();
-    let username = hex2a(ContractUsername);
+    let senderAddress = await window.contract.methods.getSenderAddress().call();
+    let add = senderAddress;
 
-    let balance = await tronWeb.trx.getBalance(add);
+    let username = await window.contract.methods.getUsername(add).call();
+
+    let balance = await window.web3.eth.getBalance(add);
 
     user = {
-        TronAddress : add,
-        HexAddress : "0x" + hexAdd,
+        TronAddress : "0x" + add,
+        HexAddress : "0x" + add,
         UserName : username,
         SunBalance : balance
     }
@@ -569,8 +532,9 @@ export async function getUserData() {
 
 
 export async function getUsers() {
-    tronWeb = dynamicTronlink()
-    const contract = await tronWeb.contract().at(contractAddress);
+    load_contract();
+    const account = await getCurrentAccount();
+
     let posts = JSON.parse(localStorage.getItem("Posts"));
     let comments = JSON.parse(localStorage.getItem("Comments"));
 
@@ -597,12 +561,12 @@ export async function getUsers() {
 
     var UserNames = []
 
-    let NoUsername = await contract.getUsername("0000000000000000000000000000000000000000").call();
+    let NoUsername = await window.contract.methods.getUsername("0000000000000000000000000000000000000000").call();
     let nousernameascii = hex2a(NoUsername);
 
     for (var i = 0; i<unique.length; i++){
         var address = unique[i].substring(2, unique[i].length)
-        let ContractUsername = await contract.getUsername(address).call();
+        let ContractUsername = await window.contract.methods.getUsername(address).call();
         let username = hex2a(ContractUsername);
 
         if(username == nousernameascii){
@@ -619,5 +583,3 @@ export async function getUsers() {
     }
     localStorage.setItem("KnownUsers", JSON.stringify(UserNames));
 }
-
-*/

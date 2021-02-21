@@ -1,19 +1,19 @@
-//No Filter is a dApp created for the Tron Accelerator
+//Safu Speak is a dApp created for the Binance Hackathon
 //The smart contract enables content creation
 //as well as metric tracking and other logic
 //When coupled with the frontend, it creates an experience similar to a 
 //traditional blog style social website such as medium and reddit
 //Created By Harnick Khera (Github.com/Hephyrius)
-//Repository can be found at (Github.com/Hephyrius/Nofilter)
+//Repository can be found at (Github.com/Hephyrius/SafuSpeak)
 
 import React, { Component } from 'react';
-import {DonateTrx} from "../utils/tronweb";
+import {DonateBNB} from "../utils/binanceweb";
 
 class Donate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      TrxValue: ''
+      BNBValue: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,11 +21,11 @@ class Donate extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({TrxValue: event.target.value});
+    this.setState({BNBValue: event.target.value});
   }
 
   handleSubmit(event) {
-    DonateTrx(this.props.postid, this.state.TrxValue);
+    DonateBNB(this.props.postid, this.state.BNBValue);
     event.preventDefault();
   }
 
@@ -38,16 +38,16 @@ class Donate extends React.Component {
 
             <form onSubmit={this.handleSubmit}>
                 <div>
-                    <input type="number" value={this.state.TrxValue} onChange={this.handleChange} /> Trx
+                    <input type="number" value={this.state.BNBValue} onChange={this.handleChange} /> BNB
                 </div>
                 <p></p>
 
-                <p><strong> You currently have a contract balance of {Number(userData['SunBalance'])/1000000}TRX</strong></p>
+                <p><strong> You currently have a contract balance of {Number(userData['SunBalance'])/1000000}BNB</strong></p>
 
                 <input type="submit" class="btn btn-outline-dark" value="Donate" />
 
                               <p></p>
-                <strong>Post Has Earned: {this.props.donation['TrxDonation']}Trx </strong> 
+                <strong>Post Has Earned: {this.props.donation['BNBDonation']}BNB </strong> 
                 
               <p></p>
             </form>

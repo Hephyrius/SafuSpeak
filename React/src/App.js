@@ -1,10 +1,10 @@
-//No Filter is a dApp created for the Tron Accelerator
+//Safu Speak is a dApp created for the Binance Accelerator
 //The smart contract enables content creation
 //as well as metric tracking and other logic
 //When coupled with the frontend, it creates an experience similar to a 
 //traditional blog style social website such as medium and reddit
 //Created By Harnick Khera (Github.com/Hephyrius)
-//Repository can be found at (Github.com/Hephyrius/Nofilter)
+//Repository can be found at (Github.com/Hephyrius/SafuSpeak)
 
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Link } from "react-router-dom";
@@ -21,7 +21,7 @@ import 'jquery/dist/jquery.js'
 import "./bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.js'
 
-import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers} from "./utils/tronweb";
+import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers} from "./utils/Binanceweb";
 
 class App extends Component {
   
