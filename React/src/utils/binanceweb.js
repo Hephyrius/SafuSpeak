@@ -12,7 +12,7 @@ import { abi } from './ABI.js'
 import {a2hex, hex2a, Time2a, aTo32bytehex, Time2HMS, TextType} from "./parser"
 
 //address of the contract
-const contractAddress = "0x58a054844dbbdf6c0b8bf9276b7f1fe2ba39ca0f";
+const contractAddress = "0x666A2829A371275073801d85Bcf70C9856FB638B";
 
 console.log(abi)
 

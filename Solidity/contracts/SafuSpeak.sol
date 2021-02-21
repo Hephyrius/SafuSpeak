@@ -1,6 +1,6 @@
 pragma solidity >=0.4.23;
 
-//No Filter is a dApp created for the Binance Smartchain Hackathon
+//SafuSpeak is a dApp created for the Binance Smartchain Hackathon
 //The smart contract enables content creation
 //as well as metric tracking and other logic
 //When coupled with the frontend, it creates an experience similar to a 

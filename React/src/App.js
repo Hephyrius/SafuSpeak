@@ -21,7 +21,7 @@ import 'jquery/dist/jquery.js'
 import "./bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.js'
 
-import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers} from "./utils/Binanceweb";
+import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers} from "./utils/binanceweb";
 
 class App extends Component {
   

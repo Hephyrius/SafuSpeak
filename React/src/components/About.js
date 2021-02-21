@@ -23,7 +23,7 @@ class About extends React.Component {
 
                 <p align="justify">
                 <h4> SafuSpeak Binance dApp</h4> 
-                <p><strong> Binance Smartchain Testnet Deployed Address - 0xb2783Fc46A841350de80F6B6b562e3Afd16d22E3</strong> </p>
+                <p><strong> Binance Smartchain Testnet Deployed Address - 0x666A2829A371275073801d85Bcf70C9856FB638B</strong> </p>
                 <p><strong> SafuSpeak is in early stages!</strong> </p>
                 <p><strong> Made for the Binance Hackathon Hackathon</strong> </p>
                 <p><strong> Creator - Harnick Khera (Github.com/Hephyrius)</strong> </p>
