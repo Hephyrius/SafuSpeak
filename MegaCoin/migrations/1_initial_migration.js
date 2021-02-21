@@ -1,5 +1,5 @@
-const Migrations = artifacts.require("Migrations");
+var nofilter = artifacts.require ("./NoFilter.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(Migrations);
+  deployer.deploy(nofilter);
 };

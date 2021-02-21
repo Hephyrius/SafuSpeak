@@ -1,14 +1,14 @@
-pragma solidity 0.5.16;
+pragma solidity >=0.4.23;
 
-//No Filter is a dApp created for the Tron Accelerator
+//No Filter is a dApp created for the Binance Smartchain Hackathon
 //The smart contract enables content creation
 //as well as metric tracking and other logic
 //When coupled with the frontend, it creates an experience similar to a 
-//traditional blog style social website such as medium and reddit
-//Created By Harnick Khera (Github.com/Hephyrius)
-//Repository can be found at (Github.com/Hephyrius/Nofilter)
+//traditional blog style social website such as classic reddit
+//Created By Hephyrius (Github.com/Hephyrius)
+//Repository can be found at (Github.com/Hephyrius/BinanceSmartChain)
 
-contract SciTalker {
+contract NoFilter {
     
     //post related variables
     uint postNumber; // keeps track of posts so that every one is unique
@@ -47,7 +47,7 @@ contract SciTalker {
     );
     
     //create a new post, done by storing data in the logs. data can be in any form as long as it is byte data. This means data can be compressed
-    function CreatePost(bytes title, bytes text, bytes tags) public {
+    function CreatePost(bytes memory title, bytes memory text, bytes memory tags) public {
         
         //check that the data is correct
         require(title.length > 0, "Invalid title");
@@ -128,7 +128,7 @@ contract SciTalker {
 		uint commentId
     );
     
-    function PostComment(bytes text, uint postId, uint parentComment) public {
+    function PostComment(bytes memory text, uint postId, uint parentComment) public {
         require(postId >= 0, "comment is not for a valid post");
         require(postId < postNumber, "comment is for a non existent post");
         require(text.length > 0, "comment comment is empty");
@@ -212,7 +212,7 @@ contract SciTalker {
         require(postId >= 0, "votes is not for a valid post");
         require(postId < postNumber, "votes is for a non existent post");
         
-        address owner = postOwners[postId];
+        address payable owner = address(uint160(postOwners[postId]));
         owner.transfer(msg.value);
         
         //post owner

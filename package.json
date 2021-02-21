@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@binance-chain/bsc-connector": "^1.0.0",
     "@binance-chain/javascript-sdk": "^4.1.1",
     "@truffle/hdwallet-provider": "^1.2.2"
   }
