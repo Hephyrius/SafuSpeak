@@ -517,6 +517,10 @@ export async function ChangeUsername(UsernameString) {
     ));
 }
 
+export function reloadcurrentpage(){
+    window.history.go(0)
+}
+
 //get the current users data
 export async function getUserData() {
     load_contract();
@@ -602,4 +606,4 @@ export async function getUsers() {
     localStorage.setItem("KnownUsers", JSON.stringify(UserNames));
 }
 
-export {testweb3, reloadDom}
+export {testweb3}

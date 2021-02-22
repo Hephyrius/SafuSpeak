@@ -21,7 +21,7 @@ import 'jquery/dist/jquery.js'
 import "./bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.js'
 
-import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers, testweb3} from "./utils/binanceweb";
+import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers, testweb3, reloadcurrent} from "./utils/binanceweb";
 
 class App extends Component {
   
@@ -37,6 +37,12 @@ class App extends Component {
     getUserData()
     getDonations()
     getUsers()
+
+    setTimeout(function() { 
+      var p = window.location.href.split("#")[1]
+      if (p == "/") 
+      {window.history.go(0); 
+      }}, 15000);
   }
 
   render() {
