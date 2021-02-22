@@ -55,7 +55,7 @@ class Account extends React.Component {
                     <p></p>
                         <strong>Username: </strong> {userData['UserName']}
                     <p></p>
-                        <strong>Address: </strong> {userData['TronAddress']}
+                        <strong>Address: </strong> {userData['binanceaddress']}
                     <p></p>
                         <strong>Hex Address: </strong> {userData['HexAddress']}
                     <p></p>

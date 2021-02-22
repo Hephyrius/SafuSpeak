@@ -86,7 +86,7 @@ class PostPage extends Component {
                   <Divider variant="middle" />
 
                   Posted on {post['timestamp']} at {post['hms']} by
-                  <Tooltip title={" " +post['author']+" "+post['tronaddress']} leaveDelay={400} interactive={true}><strong> {username}</strong></Tooltip>
+                  <Tooltip title={" " +post['author']+" "+post['binanceaddress']} leaveDelay={400} interactive={true}><strong> {username}</strong></Tooltip>
 
                   <Divider variant="middle" />
 

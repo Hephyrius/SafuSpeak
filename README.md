@@ -5,15 +5,15 @@
 ###### NOTE: The first time you load the app you must refresh atleast once for the events populated from the EVM to populate the dApp
 ## dApp is currently not live on a any web servers - but SafuSpeak.com will be up within a day or so!
 
-## Made for the Tron Accelerator Hackathon
+## Made for the Binance Smartchain Hackathon
 ## Creator - Harnick Khera (Hephyrius)
 
 ##### [VIDEO of submission of dApp](https://youtu.be/DFyl1qRU2oo)
 
 ## What is SafuSpeak
-SafuSpeak is a dApp media platform. The platform allows users to share content with other users, akin to platforms such as medium or reddit. It leverages the BSC EVM event system as a means of storing content in an immutable fashion. The platform allows users to reward the content they like with donations (in trx). The dApp also makes use of Tron SmartContracts to keep track of statistics such as Votes and Donations. There is no fee model for this dApp, other than the Gas cost for functions. it is freely useable in it current form. 
+SafuSpeak is a dApp media platform. The platform allows users to share content with other users, akin to platforms such as medium or reddit. It leverages the BSC EVM event system as a means of storing content in an immutable fashion. The platform allows users to reward the content they like with donations (in trx). The dApp also makes use of Binance SmartContracts to keep track of statistics such as Votes and Donations. There is no fee model for this dApp, other than the Gas cost for functions. it is freely useable in it current form. 
 
-The dApp essentially uses RPC nodes as a server, and BSC as a database and handler, whilst the frontend acts as the client and peices it all together. The is dApp allows the user to tap directly into a BSC node of their choice (via tronLink settings). Due to the fact that no data is stored offchain it is near impossible to censor.
+The dApp essentially uses RPC nodes as a server, and BSC as a database and handler, whilst the frontend acts as the client and peices it all together. The is dApp allows the user to tap directly into a BSC node of their choice (via binance chain settings). Due to the fact that no data is stored offchain it is near impossible to censor.
 
 ## Why is it needed
 
@@ -37,14 +37,15 @@ yarn
 with /solidity/ as the current directory first compile all contracts by using 
 
 ``` 
-tronbox compile --compile all
+truffle compile
 ```
 
 followed by deploying to the blockchain via:
 
 ``` 
-tronbox migrate --reset
+truffle migrate --network testnet
 ```
+
 
 ### Frontend 
 

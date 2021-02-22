@@ -72,9 +72,9 @@ export async function createNewPost(title, content, tags) {
     load_contract();
 
     //convert the data to an appropriate format for the blockchain to handle
-    let byteTitle = a2hex(title);
-    let byteContent = a2hex(content);
-    let byteTags = a2hex(tags);
+    let byteTitle = window.web3.utils.asciiToHex(title);
+    let byteContent = window.web3.utils.asciiToHex(content);
+    let byteTags = window.web3.utils.asciiToHex(tags);
 
     //submit the data to the blockchain
     const account = await getCurrentAccount();
@@ -124,23 +124,21 @@ export async function convertPosts(es){
 
         console.log(i)
         let address = events[i]['returnValues']['author'];
-        let tronaddress = address;
-        //tronaddress = "41" + tronaddress;
-        //tronaddress = tronWeb.address.fromHex(tronaddress)
+        let binanceaddress = address;
 
         //format data so it can be used and stored better
 
         
         var post = {
-            title: hex2a(events[i]['returnValues']['title']),
+            title: window.web3.utils.hexToAscii(events[i]['returnValues']['title']),
             timestamp: Time2a(events[i]['returnValues']['postTimestamp']),
-            tags: hex2a(events[i]['returnValues']['tags']),
+            tags: window.web3.utils.hexToAscii(events[i]['returnValues']['tags']),
             postid: events[i]['returnValues']['id'],
             author: "0x" + address,
-            tronaddress: "0x" + tronaddress,
-            content: hex2a(events[i]['returnValues']['text']),
+            binanceaddress: "0x" + binanceaddress,
+            content: window.web3.utils.hexToAscii(events[i]['returnValues']['text']),
             hms: Time2HMS(events[i]['returnValues']['postTimestamp']),
-            type: TextType(hex2a(events[i]['returnValues']['text']))
+            type: TextType(window.web3.utils.hexToAscii(events[i]['returnValues']['text']))
           }
           TagList = TagList.concat(post['tags']);
 
@@ -169,7 +167,7 @@ export async function createNewComment(commentText, postid,  parentComment) {
 
     //convert the data to an appropriate format for the blockchain to handle
     //let byteTitle = a2hex(title);
-    let bytecommentText = a2hex(commentText);
+    let bytecommentText = window.web3.utils.asciiToHex(commentText);
     let id = "0x" + Number(postid).toString(16);
 
     //submit the data to the blockchain
@@ -207,19 +205,19 @@ export async function convertComments(es) {
     var comments = []
     for(var i=0; i<events.length; i++){
 
-        let address = events[i]['result']['commenter'];
+        let address = events[i]['returnValues']['commenter'];
         console.log(address)
-        let tronaddress = address
+        let binanceaddress = address
 
         var comment = {
-            parentComment: hex2a(events[i]['result']['parentComment']),
-            postid: events[i]['result']['postId'],
+            parentComment: hex2a(events[i]['returnValues']['parentComment']),
+            postid: events[i]['returnValues']['postId'],
             author: "0x" + address,
-            tronaddress: "0x" + tronaddress,
-            content: hex2a(events[i]['result']['comment']),
-            timestamp: Time2a(events[i]['result']['commentTimestamp']),
-            commentid: events[i]['result']['commentId'],
-            hms: Time2HMS(events[i]['result']['commentTimestamp'])
+            binanceaddress: "0x" + binanceaddress,
+            content: hex2a(events[i]['returnValues']['comment']),
+            timestamp: Time2a(events[i]['returnValues']['commentTimestamp']),
+            commentid: events[i]['returnValues']['commentId'],
+            hms: Time2HMS(events[i]['returnValues']['commentTimestamp'])
           }
 
           comments = comments.concat(comment);
@@ -424,7 +422,7 @@ export async function DonateBNB(postid, BNBAmount) {
 
 
     //submit the data to the blockchain
-    await window.contract.methods.makeDonation(id).send({from: account, callValue: sunAmount})
+    await window.contract.methods.makeDonation(id).send({from: account, callValue: sunHexValue})
     .then(res => Swal({
         title:'Donation Successful',
         type: 'success'
@@ -515,13 +513,15 @@ export async function getUserData() {
     //grab the sender address from the blockchain
     let senderAddress = await window.contract.methods.getSenderAddress().call();
     let add = senderAddress;
-
+    console.log(add)
     let username = await window.contract.methods.getUsername(add).call();
 
-    let balance = await window.web3.eth.getBalance(add);
+    let balance = window.web3.eth.getBalance(add);
+    console.log(balance)
+    
 
     user = {
-        TronAddress : "0x" + add,
+        binanceaddress : "0x" + add,
         HexAddress : "0x" + add,
         UserName : username,
         SunBalance : balance
