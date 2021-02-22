@@ -17,6 +17,10 @@
 * Username system
 * Donation System
 
+## Why not deployed on mainnet?
+
+The contract needs to be audited for security and some dependencies need updating. Once done, this is repo is ready for mainnet deployment.
+
 ### [Checkout a post with videos, images and text](https://safuspeak.com/#/post=4)
 
 
