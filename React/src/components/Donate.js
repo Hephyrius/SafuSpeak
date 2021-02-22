@@ -41,7 +41,7 @@ class Donate extends React.Component {
                     <input type="number" value={this.state.BNBValue} onChange={this.handleChange} /> BNB
                 </div>
                 <p></p>
-
+                
                 <input type="submit" class="btn btn-outline-dark" value="Donate" />
 
                               <p></p>

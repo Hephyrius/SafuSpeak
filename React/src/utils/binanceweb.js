@@ -529,20 +529,20 @@ export async function getUserData() {
     }
 
     //grab the sender address from the blockchain
-    let senderAddress = await window.contract.methods.getSenderAddress().call();
-    let add = senderAddress;
+    let add = account;
     console.log(add)
-    let username = await window.contract.methods.getUsername(add).call();
+    let username = window.web3.utils.hexToAscii(await window.contract.methods.getUsername(add).call());
 
-    let balance = window.web3.eth.getBalance(add);
+    let balance = await window.web3.eth.getBalance(add);
     console.log(balance)
+    console.log(account)
     
 
     user = {
         binanceaddress : add,
         HexAddress : add,
         UserName : username,
-        SunBalance : balance
+        SunBalance : balance * (10^16)
     }
 
     localStorage.setItem("User", JSON.stringify(user));
