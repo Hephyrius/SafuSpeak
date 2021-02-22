@@ -1,14 +1,21 @@
 # SafuSpeak - Binance Smart Chain Censorship Resistant Social Platform.
 
-## Testnet Deployed Address - 0x666A2829A371275073801d85Bcf70C9856FB638B 
-
-###### NOTE: The first time you load the app you must refresh atleast once for the events populated from the EVM to populate the dApp
-
-## Made for the Binance Smartchain Hackathon
-## Creator - Harnick Khera (Hephyrius)
-## Live dApp Website [SafuSpeak.com](https://SafuSpeak.com)
+##### Testnet Deployed Address - 0x666A2829A371275073801d85Bcf70C9856FB638B 
+##### Made for the Binance Smartchain Hackathon
+##### Creator - Harnick Khera (Hephyrius)
+##### Live dApp Website [SafuSpeak.com](https://SafuSpeak.com)
 ##### [quick VIDEO of submission of dApp](https://youtu.be/DFyl1qRU2oo)
+##### NOTE: The first time you load the app you must refresh atleast once for the events populated from the EVM to populate the dApp
 [![](http://img.youtube.com/vi/DFyl1qRU2oo/0.jpg)](http://www.youtube.com/watch?v=DFyl1qRU2oo "quick VIDEO of submission of dApp")
+
+## Key Features
+
+* Upvote System
+* Anonymity System
+* Username system
+* Donation System
+* Rich text support for text formating, images and other media
+* Video, Image and Audio Support if Torrents are detected(WebTorrent)
 
 ## What is SafuSpeak
 SafuSpeak is a dApp media platform. The platform allows users to share content with other users, akin to platforms such as medium or reddit. It leverages the BSC EVM event system as a means of storing content in an immutable fashion. The platform allows users to reward the content they like with donations (in trx). The dApp also makes use of Binance SmartContracts to keep track of statistics such as Votes and Donations. There is no fee model for this dApp, other than the Gas cost for functions. it is freely useable in it current form. 
@@ -22,15 +29,15 @@ Being Censorship Resistant is a very important concept for the modern internet, 
 
 ### Tech Stack and Dependencies
 
-NodeJS
-Web3
-react-quill
-react-tabs
-material-ui/core
-ReactJS
-Bootstrap
-jQuery
-yarn
+* NodeJS
+* Web3
+* react-quill
+* react-tabs
+* material-ui/core
+* ReactJS
+* Bootstrap
+* jQuery
+* yarn
 
 ### Deploying the smart contract
 
