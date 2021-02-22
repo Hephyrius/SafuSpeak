@@ -18,7 +18,7 @@ class DummyItem extends Component {
       <div className="DummyItem">
         <div class="container">
             <div class="row">
-              There are no {type}'s to display. Try refreshing the page to load events from the Binance Virtual Machine. If no events are shown, try pointing your binance chain to another event server as api.trongrid.io will only show events from the last ~6 hours.
+              There are no {type}'s to display. This may be because you aren't connected to the Binance Smart Chain Testnet using MetaMask or another web3 wallet. If you are connected, try refreshing the page to load events from the Smart Chain EVM. If no events are shown, try pointing your binance chain to another server.
             </div>
           </div>
         </div>
