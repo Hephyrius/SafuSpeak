@@ -4,9 +4,10 @@
 ##### Made for the Binance Smartchain Hackathon
 ##### Creator - Harnick Khera (Hephyrius)
 ##### Live dApp Website [SafuSpeak.com](https://SafuSpeak.com)
-##### [Video of Submission](https://youtu.be/vC-Q2kIPZs0)
-##### [original quick VIDEO of submission of dApp](https://youtu.be/DFyl1qRU2oo)
-[![](http://img.youtube.com/vi/Q2kIPZs0/0.jpg)](http://www.youtube.com/watch?v=Q2kIPZs0 "quick VIDEO of submission of dApp that poorly displays what it can do. Better video to follow!")
+##### [Video of Submission](https://www.youtube.com/watch?v=35CCWF871Qo)
+##### [original quick VIDEO of submission of dApp](https://youtu.be/35CCWF871Qo)
+
+[![](http://img.youtube.com/vi/35CCWF871Qo/0.jpg)](http://www.youtube.com/watch?v=35CCWF871Qo "quick VIDEO of submission of dApp that poorly displays what it can do. Better video to follow!")
 
 ## Key Features
 
