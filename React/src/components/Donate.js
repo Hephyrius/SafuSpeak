@@ -42,8 +42,6 @@ class Donate extends React.Component {
                 </div>
                 <p></p>
 
-                <p><strong> You currently have a contract balance of {Number(userData['SunBalance'])/1000000}BNB</strong></p>
-
                 <input type="submit" class="btn btn-outline-dark" value="Donate" />
 
                               <p></p>

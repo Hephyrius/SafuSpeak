@@ -26,6 +26,16 @@ function testweb3(){
     }
 }
 
+function reloadDom(){
+    getPosts()
+    getComments()
+    getVoteCounters()
+    getCommentVoteCounters()
+    getUserData()
+    getDonations()
+    getUsers()
+}
+
 async function loadWeb3() {
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
@@ -419,8 +429,8 @@ export async function DonateBNB(postid, BNBAmount) {
     const account = await getCurrentAccount();
 
     //convert the postid into a useable form
-    let sunAmount = Number(BNBAmount * 1000000) // 1 BNB is 1 million sun, call value is in sun.
-    let sunHexValue = "0x" + Number(sunAmount).toString(16);
+    let weiAmount = window.web3.utils.toWei(window.web3.utils.toBN(BNBAmount), 'ether')
+
     let id = "0x" + Number(postid).toString(16);
 
 
@@ -430,7 +440,7 @@ export async function DonateBNB(postid, BNBAmount) {
 
 
     //submit the data to the blockchain
-    await window.contract.methods.makeDonation(id).send({from: account, callValue: sunHexValue})
+    await window.contract.methods.makeDonation(id).send({from: account, value: weiAmount})
     .then(res => Swal({
         title:'Donation Successful',
         type: 'success'
@@ -462,12 +472,12 @@ export async function getDonations() {
 
         //grab vote data from the blockchain
         let ContractPostDonation = await window.contract.methods.getPostDonations(id).call();
-        let Sun = window.web3.utils.toBN(ContractPostDonation).toNumber();
+        let Sun = window.web3.utils.fromWei(ContractPostDonation)
 
         let Donation = {
             postid : pid,
             SunDonations : Sun,
-            BNBDonation: (Sun/1000000)
+            BNBDonation: Sun
         }
 
         Donations = Donations.concat(Donation);
@@ -529,8 +539,8 @@ export async function getUserData() {
     
 
     user = {
-        binanceaddress : "0x" + add,
-        HexAddress : "0x" + add,
+        binanceaddress : add,
+        HexAddress : add,
         UserName : username,
         SunBalance : balance
     }
@@ -592,4 +602,4 @@ export async function getUsers() {
     localStorage.setItem("KnownUsers", JSON.stringify(UserNames));
 }
 
-export {testweb3}
+export {testweb3, reloadDom}
