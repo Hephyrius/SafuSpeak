@@ -18,6 +18,14 @@ console.log(abi)
 
 const Web3 = require('web3');
 
+function testweb3(){
+    if(!window.web3){
+        Swal({title:'No Web3 Wallet was detected. Please make sure you have metamask or another wallet, and are connected to the BSC Testnet.',
+            type: 'info'
+        });
+    }
+}
+
 async function loadWeb3() {
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
@@ -583,3 +591,5 @@ export async function getUsers() {
     }
     localStorage.setItem("KnownUsers", JSON.stringify(UserNames));
 }
+
+export {testweb3}

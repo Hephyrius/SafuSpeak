@@ -21,7 +21,7 @@ import 'jquery/dist/jquery.js'
 import "./bootstrap.css";
 import 'bootstrap/dist/js/bootstrap.js'
 
-import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers} from "./utils/binanceweb";
+import {getPosts, getComments, getVoteCounters, getCommentVoteCounters, getUserData, getDonations, getUsers, testweb3} from "./utils/binanceweb";
 
 class App extends Component {
   
@@ -45,6 +45,8 @@ class App extends Component {
       <div className="App">
         <div class="container">
           <SiteHeader />
+
+          {testweb3()}
 
           <Route path="/new-post" component={newpost} />
 
