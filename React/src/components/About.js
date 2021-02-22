@@ -29,6 +29,8 @@ class About extends React.Component {
                 <p><strong> Creator - Harnick Khera (Github.com/Hephyrius)</strong> </p>
                 </p>
 
+                <iframe width="1280" height="720" src="https://www.youtube.com/embed/vC-Q2kIPZs0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
                 <p align="justify">
                 <h4>What is SafuSpeak</h4>
                 SafuSpeak is a dApp media platform. The platform allows users to share content with other users, akin to platforms such as medium or reddit. It leverages the BSC event system as a means of storing content in an immutable fashion. The platform allows users to reward the content they like with donations (in BNB). The dApp also makes use of BSC EVM Smart Contracts to keep track of statistics such as Votes and Donations. There is no fee model for this dApp (yet), other than the Gas cost for functions. it is freely useable in it current form. 

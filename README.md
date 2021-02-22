@@ -4,9 +4,9 @@
 ##### Made for the Binance Smartchain Hackathon
 ##### Creator - Harnick Khera (Hephyrius)
 ##### Live dApp Website [SafuSpeak.com](https://SafuSpeak.com)
-##### [quick VIDEO of submission of dApp](https://youtu.be/DFyl1qRU2oo)
-##### NOTE: The first time you load the app you must refresh atleast once for the events populated from the EVM to populate the dApp
-[![](http://img.youtube.com/vi/DFyl1qRU2oo/0.jpg)](http://www.youtube.com/watch?v=DFyl1qRU2oo "quick VIDEO of submission of dApp")
+##### [Video of Submission](https://youtu.be/vC-Q2kIPZs0)
+##### [original quick VIDEO of submission of dApp](https://youtu.be/DFyl1qRU2oo)
+[![](http://img.youtube.com/vi/Q2kIPZs0/0.jpg)](http://www.youtube.com/watch?v=Q2kIPZs0 "quick VIDEO of submission of dApp that poorly displays what it can do. Better video to follow!")
 
 ## Key Features
 
@@ -27,7 +27,7 @@ The dApp essentially uses RPC nodes as a server, and BSC as a database and handl
 
 ## Why is it needed
 
-Being Censorship Resistant is a very important concept for the modern internet, which is under constant assault by government censorship and manipulation by shadowy organisations and private interests. Another area where this concept is important is in the realm of content policing and cancel culture, modern social platforms often alienate fringe communities with broad rules that can often push users to darker platforms or echo chambers. This is evident in many cases, with the recent parlor ban being one such controversial case. Another need for this dApp is the case of data harvesting. The dApp only records bare bone facts about a user to the blockchain and does not track users in any form. This is appealing in the post camebridge-analytica social domain where people are normally the commodity!.
+Being Censorship Resistant is a very important concept for the modern internet, which is under constant assault by government censorship and manipulation by shadowy organisations and private interests. Another area where this concept is important is in the realm of content policing and cancel culture, modern social platforms often alienate fringe communities with broad rules that can often push users to darker platforms or echo chambers. This is evident in many cases, with the recent parlor ban being one such controversial case. Another need for this dApp is the case of data harvesting. The dApp only records bare bone facts about a user to the blockchain and does not track users in any form. This is appealing in the post cambridge-analytica social domain where people are normally the commodity!.
 ## Development and Deployment
 
 ### Tech Stack and Dependencies
