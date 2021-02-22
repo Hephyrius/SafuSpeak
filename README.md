@@ -10,12 +10,15 @@
 
 ## Key Features
 
+* Serverless Video, Image and Audio Support! (Via Torrents)
+* Rich text support for text formating, images and other media
 * Upvote System
 * Anonymity System
 * Username system
 * Donation System
-* Rich text support for text formating, images and other media
-* Video, Image and Audio Support if Torrents are detected(WebTorrent)
+
+### [Checkout a post with videos, images and text](https://safuspeak.com/#/post=4)
+
 
 ## What is SafuSpeak
 SafuSpeak is a dApp media platform. The platform allows users to share content with other users, akin to platforms such as medium or reddit. It leverages the BSC EVM event system as a means of storing content in an immutable fashion. The platform allows users to reward the content they like with donations (in trx). The dApp also makes use of Binance SmartContracts to keep track of statistics such as Votes and Donations. There is no fee model for this dApp, other than the Gas cost for functions. it is freely useable in it current form. 
@@ -38,56 +41,4 @@ Being Censorship Resistant is a very important concept for the modern internet, 
 * Bootstrap
 * jQuery
 * yarn
-
-### Deploying the smart contract
-
-with /solidity/ as the current directory first compile all contracts by using 
-
-``` 
-truffle compile
-```
-
-followed by deploying to the blockchain via:
-
-``` 
-truffle migrate --network testnet
-```
-
-
-### Frontend 
-
-this section assumes /react/ is the current directory
-
-#### Development mode
-
-You can launch nofilter in react development mode by running
-
-```
-yarn start
-```
-
-#### Compiling
-
-the frontend can be compiled using 
-
-```
-yarn dev
-```
-
-#### Hosting
-
-We can host the compiled files using pm2 and serve (
-```
-npm install -i -g pm2
-npm install -i -g serve
-```
-
-and then we can deploy on our server using the following command with the compiled files in the same current directory
-
-```
-pm2 serve build
-```
-
-this deploys the frontend to port 8080
-
 
